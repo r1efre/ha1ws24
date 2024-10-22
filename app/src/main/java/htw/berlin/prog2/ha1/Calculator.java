@@ -16,7 +16,7 @@ public class Calculator {
 
     public String latestOperation = "";
 
-    private ArrayList<String> history = new ArrayList<>();
+    private ArrayList<String> history = new ArrayList<>(); //neue ArrayList, damit einige Zeichen wie dot z.B. gespeichert werden können"
 
     /**
      * @return den aktuellen Bildschirminhalt als String
@@ -39,29 +39,39 @@ public class Calculator {
 
         if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
 
-        if(screen.contains(".") && !history.isEmpty()) {
-            number = history.get(history.size()-1);
-            history.set(history.size()-1, number + digit);
+        if(screen.contains(".") && !history.isEmpty()) { //es gibt Elementen in ArrayList
+            number = history.get(history.size()-1); //nimmt letzte Element aus history Array und speichert in number
+            history.set(history.size()-1, number + digit); //schreibt letzte Element von history ArrayList erneut mit
+            //variable number und digit zusammen
         }
         else {
-            history.add(Integer.toString(digit));
+            history.add(Integer.toString(digit)); //digit wird zu String
         }
-        screen = screen + digit;
+        screen = screen + digit;//обновляет строки digit
+    }
+
+    //diese Methode auf zwei geteilt, da C und CE haben aus meiner Sicht verschiedene Funktionen
+    /**
+     * Empfängt den Befehl der C-Taste (Clear).
+     * Einmaliges Drücken der Taste löscht die zuvor eingegebenen Ziffern auf dem Bildschirm
+     * so dass "0" angezeigt wird, jedoch ohne zuvor zwischengespeicherte Werte und Operationsmodus zu löschen.
+     */
+    public void pressClearKey() {
+        screen = "0"; //latest Operation wurde nicht erneut
+        latestValue = 0.0;
     }
 
     /**
-     * Empfängt den Befehl der C- bzw. CE-Taste (Clear bzw. Clear Entry).
-     * Einmaliges Drücken der Taste löscht die zuvor eingegebenen Ziffern auf dem Bildschirm
-     * so dass "0" angezeigt wird, jedoch ohne zuvor zwischengespeicherte Werte zu löschen.
-     * Wird daraufhin noch einmal die Taste gedrückt, dann werden auch zwischengespeicherte
-     * Werte sowie der aktuelle Operationsmodus zurückgesetzt, so dass der Rechner wieder
-     * im Ursprungszustand ist.
+     * Empfängt den Befehl der CE-Taste (Clear-Enter).
+     * Drücken CE-Taste löscht zuvor eingegebene und zwischengespeicherte Werte sowie
+     * den aktuellen Operationsmodus, so dass der Rechner wieder im Ursprungszustand ist.
      */
-    public void pressClearKey() {
+    public void pressClearEnterKey() {
         screen = "0";
         latestOperation = "";
         latestValue = 0.0;
     }
+
 
     /**
      * Empfängt den Wert einer gedrückten binären Operationstaste, also eine der vier Operationen
@@ -88,7 +98,7 @@ public class Calculator {
         //latestValue = Double.parseDouble(screen);
         double value;
         latestOperation = operation;
-        value = Double.parseDouble(history.get(history.size()-1));
+        value = Double.parseDouble(history.get(history.size()-1)); //letze Wert aus Array zu double
 
         var result = switch(operation) {
             case "√" -> Math.sqrt(value);
@@ -96,7 +106,7 @@ public class Calculator {
             case "1/x" -> 1 / value;
             default -> throw new IllegalArgumentException();
         };
-        screen = Double.toString(result);
+        screen = Double.toString(result); //zu String
         if(screen.equals("NaN")) screen = "Error";
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
 
@@ -113,7 +123,7 @@ public class Calculator {
         if(!screen.contains(".")) {
             screen = screen + ".";
 
-            history.set(history.size()-1, screen);
+            history.set(history.size()-1, screen); //hier
         }
     }
 
@@ -125,7 +135,7 @@ public class Calculator {
      * entfernt und der Inhalt fortan als positiv interpretiert.
      */
     public void pressNegativeKey() {
-        screen = screen.startsWith("-") ? screen.substring(1) : "-" + screen;
+        screen = screen.startsWith("-") ? screen.substring(1) : history.set(history.size() -1, "-" + screen);
 
     }
 

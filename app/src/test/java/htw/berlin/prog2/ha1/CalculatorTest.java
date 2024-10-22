@@ -107,7 +107,7 @@ class CalculatorTest {
         assertEquals(expected, actual);
     }
 
-  //falscher Test
+  //falsche Tests
   @Test
   @DisplayName("should memorise the binary operation by deleting the second operand after pressing C-button once")
   void testCButtonByAddition() {
@@ -124,8 +124,8 @@ class CalculatorTest {
   }
 
     @Test
-    @DisplayName("should display result of decimal inversion")
-    void decimalInversion() {
+    @DisplayName("should display result of decimal percent")
+    void decimalPercent() {
         Calculator calc = new Calculator();
 
         calc.pressDigitKey(1);
