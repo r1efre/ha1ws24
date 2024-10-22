@@ -108,21 +108,20 @@ class CalculatorTest {
     }
 
   //falscher Test
-   @Test
-   @DisplayName("should display result after multiplying one positive and one negative numbers")
-    void testPositiveAndNegativeMultiplication() {
-        Calculator calc = new Calculator(); //Objekt erzeugen
+  @Test
+  @DisplayName("should memorise the binary operation by deleting the second operand after pressing C-button once")
+  void testCButtonByAddition() {
+      Calculator calc = new Calculator();
 
-       calc.pressNegativeKey();
-       calc.pressDigitKey(5);
-       calc.pressBinaryOperationKey("x");
-       calc.pressDigitKey(2);
-       calc.pressEqualsKey();
+      calc.pressDigitKey(2);
+      calc.pressBinaryOperationKey("+");
+      calc.pressClearKey();
 
-       String expected = "-10";
-       String actual = calc.readScreen();
-       assertEquals(expected, actual);
-    }
+      String expected = "+";
+      String actual = calc.latestOperation;
+      assertEquals(expected, actual);
+
+  }
 
     @Test
     @DisplayName("should display result of decimal inversion")

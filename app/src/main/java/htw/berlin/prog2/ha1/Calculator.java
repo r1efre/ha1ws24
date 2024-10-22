@@ -14,7 +14,7 @@ public class Calculator {
 
     private double latestValue;
 
-    private String latestOperation = "";
+    public String latestOperation = "";
 
     private ArrayList<String> history = new ArrayList<>();
 
@@ -126,6 +126,7 @@ public class Calculator {
      */
     public void pressNegativeKey() {
         screen = screen.startsWith("-") ? screen.substring(1) : "-" + screen;
+
     }
 
     /**
