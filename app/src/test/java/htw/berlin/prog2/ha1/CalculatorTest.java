@@ -92,16 +92,17 @@ class CalculatorTest {
     //TODO hier weitere Tests erstellen
     //gruene Test
     @Test
-    @DisplayName("should display result after multiplying two positive numbers")
-    void testPositiveMultiplication() {
+    @DisplayName("should repeat an operation after second press on equal-button")
+    void testRepeatOperation() {
         Calculator calc = new Calculator();
 
-        calc.pressDigitKey(5);
+        calc.pressDigitKey(2);
         calc.pressBinaryOperationKey("x");
         calc.pressDigitKey(2);
         calc.pressEqualsKey();
+        calc.pressEqualsKey();
 
-        String expected = "10";
+        String expected = "8";
         String actual = calc.readScreen();
         assertEquals(expected, actual);
     }
@@ -121,9 +122,8 @@ class CalculatorTest {
        String expected = "-10";
        String actual = calc.readScreen();
        assertEquals(expected, actual);
-
-
-
     }
+
+
 }
 
