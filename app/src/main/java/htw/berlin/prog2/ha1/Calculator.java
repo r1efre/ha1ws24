@@ -1,5 +1,7 @@
 package htw.berlin.prog2.ha1;
 
+import java.util.ArrayList;
+
 /**
  * Eine Klasse, die das Verhalten des Online Taschenrechners imitiert, welcher auf
  * https://www.online-calculator.com/ aufgerufen werden kann (ohne die Memory-Funktionen)
@@ -13,6 +15,8 @@ public class Calculator {
     private double latestValue;
 
     private String latestOperation = "";
+
+    private ArrayList<String> history = new ArrayList<>();
 
     /**
      * @return den aktuellen Bildschirminhalt als String
@@ -29,10 +33,19 @@ public class Calculator {
      * @param digit Die Ziffer, deren Taste gedrückt wurde
      */
     public void pressDigitKey(int digit) {
+        String number;
+
         if(digit > 9 || digit < 0) throw new IllegalArgumentException();
 
         if(screen.equals("0") || latestValue == Double.parseDouble(screen)) screen = "";
 
+        if(screen.contains(".") && !history.isEmpty()) {
+            number = history.get(history.size()-1);
+            history.set(history.size()-1, number + digit);
+        }
+        else {
+            history.add(Integer.toString(digit));
+        }
         screen = screen + digit;
     }
 
@@ -72,12 +85,15 @@ public class Calculator {
      * @param operation "√" für Quadratwurzel, "%" für Prozent, "1/x" für Inversion
      */
     public void pressUnaryOperationKey(String operation) {
-        latestValue = Double.parseDouble(screen);
+        //latestValue = Double.parseDouble(screen);
+        double value;
         latestOperation = operation;
+        value = Double.parseDouble(history.get(history.size()-1));
+
         var result = switch(operation) {
-            case "√" -> Math.sqrt(Double.parseDouble(screen));
-            case "%" -> Double.parseDouble(screen) / 100;
-            case "1/x" -> 1 / Double.parseDouble(screen);
+            case "√" -> Math.sqrt(value);
+            case "%" -> value / 100;
+            case "1/x" -> 1 / value;
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
@@ -94,7 +110,11 @@ public class Calculator {
      * Beim zweimaligem Drücken, oder wenn bereits ein Trennzeichen angezeigt wird, passiert nichts.
      */
     public void pressDotKey() {
-        if(!screen.contains(".")) screen = screen + ".";
+        if(!screen.contains(".")) {
+            screen = screen + ".";
+
+            history.set(history.size()-1, screen);
+        }
     }
 
     /**

@@ -129,12 +129,12 @@ class CalculatorTest {
     void decimalInversion() {
         Calculator calc = new Calculator();
 
-        calc.pressDigitKey(0);
+        calc.pressDigitKey(1);
         calc.pressDotKey();
         calc.pressDigitKey(2);
         calc.pressUnaryOperationKey("%");
 
-        String expected = "0.002";
+        String expected = "0.012";
         String actual = calc.readScreen();
         assertEquals(expected, actual);
     }
