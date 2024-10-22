@@ -90,5 +90,40 @@ class CalculatorTest {
 
 
     //TODO hier weitere Tests erstellen
+    //gruene Test
+    @Test
+    @DisplayName("should display result after multiplying two positive numbers")
+    void testPositiveMultiplication() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(5);
+        calc.pressBinaryOperationKey("x");
+        calc.pressDigitKey(2);
+        calc.pressEqualsKey();
+
+        String expected = "10";
+        String actual = calc.readScreen();
+        assertEquals(expected, actual);
+    }
+
+  //falscher Test
+   @Test
+   @DisplayName("should display result after multiplying one positive and one negative numbers")
+    void testPositiveAndNegativeMultiplication() {
+        Calculator calc = new Calculator(); //Objekt erzeugen
+
+       calc.pressNegativeKey();
+       calc.pressDigitKey(5);
+       calc.pressBinaryOperationKey("x");
+       calc.pressDigitKey(2);
+       calc.pressEqualsKey();
+
+       String expected = "-10";
+       String actual = calc.readScreen();
+       assertEquals(expected, actual);
+
+
+
+    }
 }
 
